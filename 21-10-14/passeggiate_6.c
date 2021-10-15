@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Sometimes doesn't work, need to fix
-
 int main()
 {
 	srand(time(NULL));
@@ -19,10 +17,10 @@ int main()
 	do
 	{
 		if(
-			(table[posx-1][posy] != '.' || posx-1 < 0) &&
-			(table[posx][posy-1] != '.' || posy-1 < 0) &&
-			(table[posx+1][posy] != '.' || posx+1 > 9) &&
-			(table[posx][posy+1] != '.' || posy+1 > 9)
+			(posx-1 < 0 || table[posx-1][posy] != '.') &&
+			(posy-1 < 0 || table[posx][posy-1] != '.') &&
+			(posx+1 > 9 || table[posx+1][posy] != '.') &&
+			(posy+1 > 9 || table[posx][posy+1] != '.')
 		) break;
 		choice = rand() % 4;
 		if(choice == 0)
@@ -46,14 +44,14 @@ int main()
 			table[posx][posy] = a;
 			a++;
 		}
-		else if(choice == 0)
+		else if(choice == 3)
 		{
 			if(posx - 1 < 0 || table[posx-1][posy] != '.') continue;
 			posx--;
 			table[posx][posy] = a;
 			a++;
 		}
-	}while(a != 'Z');
+	}while(a != 'Z'+1);
 	
 	for(int x = 0; x < 10; x++)
 	{
