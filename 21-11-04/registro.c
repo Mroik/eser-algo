@@ -9,14 +9,19 @@
 // Creates a new book of size "size", if registry has an existing book destroys
 // the old one and replaces it with the new one.
 // Returns 0 on failure, non-zero otherwise.
-char** new_book(char** registry, int size)
+char** new_book(char** registry, int size, int cur_size)
 {
 	if(size < 1)
 	{
 		printf("Invalid size\n");
 		return NULL;
 	}
-	if(registry != NULL) free(registry);
+	if(registry != NULL)
+	{
+		for(int x = 0; x < cur_size; x++)
+			free(registry[x]);
+		free(registry);
+	}
 	registry = malloc(sizeof(char**) * size);
 	if(registry == NULL)
 	{
@@ -135,7 +140,7 @@ int main()
 		{
 			case 'b':
 				scanf(" %d", &temp);
-				registry = new_book(registry, temp);
+				registry = new_book(registry, temp, size);
 				if(registry != NULL) size = temp;
 				break;
 			case '+':
